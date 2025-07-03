@@ -13,9 +13,9 @@ jobs:
 
         - name: dotnet build and publish
           run: |
-            dotnet restore FruitAPI/LoadTest2.csproj
-            dotnet build FruitAPI/LoadTest2.csproj --configuration Release
-            dotnet publish FruitAPI/LoadTest2.csproj --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/loadtestapi
+            dotnet restore fapi/LoadTest2.csproj
+            dotnet build fapi/LoadTest2.csproj --configuration Release
+            dotnet publish fapi/LoadTest2.csproj --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/loadtestapi
 
         - name: "Login vis CLI"
           uses: azure/login@v1
