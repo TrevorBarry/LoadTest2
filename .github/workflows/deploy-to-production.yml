@@ -13,9 +13,9 @@ jobs:
 
         - name: dotnet build and publish
           run: |
-            dotnet restore FruitAPI/FruitAPI.csproj
-            dotnet build FruitAPI/FruitAPI.csproj --configuration Release
-            dotnet publish FruitAPI/FruitAPI.csproj --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/fruitapi
+            dotnet restore FruitAPI/LoadTest2.csproj
+            dotnet build FruitAPI/LoadTest2.csproj --configuration Release
+            dotnet publish FruitAPI/LoadTest2.csproj --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/loadtestapi
 
         - name: "Login vis CLI"
           uses: azure/login@v1
@@ -32,4 +32,4 @@ jobs:
           with:
             app-name: ${{ env.AZUREWEBAPP_NAME }}
             slot-name: production
-            package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/fruitapi
+            package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/loadtestapi
