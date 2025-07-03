@@ -2,7 +2,7 @@ name: Deploy to production
 on: 
   workflow_dispatch:
 env: 
-    AZUREWEBAPP_NAME: fred
+    AZUREWEBAPP_NAME: az2006applt0408
     AZURE_WEBAPP_PACKAGE_PATH: "."
     DOTNET_VERSION: "8.0.x"
 jobs:
