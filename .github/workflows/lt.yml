@@ -45,14 +45,14 @@ jobs:
         - name: Azure Load Testing
           uses: azure/load-testing@v1.1.27
           with:
-             loadTestConfigFile: 'test1.yaml'
+             loadTestConfigFile: '../test1.yaml'
              loadTestResource: ${{ env.LOAD_TEST_RESOURCE}}
              resourceGroup: ${{ env.RESOURCE_GROUP }}
              env: |
                [
                  {
                     "name": "webapp",
-                    "value": "${{ env.AZURE_WEBAPP_NAME }}-staging.azurewebsites.net"
+                    "value": "${{ env.AZUREWEBAPP_NAME }}-staging.azurewebsites.net"
                  }
                ]
 
