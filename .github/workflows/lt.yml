@@ -1,5 +1,6 @@
 name: CI on Pull Request
-on: [workflow_dispatch]
+on: [push]
+# on: [workflow_dispatch]
  # pull_request:
  #   branches:
  #   - staging
