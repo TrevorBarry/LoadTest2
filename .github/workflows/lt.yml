@@ -67,8 +67,8 @@ jobs:
             name: loadTestResults
             path: ${{github.workspace}}/loadTest
          
-        - name: Azure Swap staging and production slots
+        - name: assign domain name 'HTTPSSample.domain' to staging slot
           uses: azure/CLI@v1
           with:
                inlineScript: |
-                  az webapp config hostname add -hostname HTTPSample.domain --resource-group "{{ env.RESOURCE_GROUP }}" --slot "staging" --webapp-name {{ env.AZUREWEBAPP_NAME }} 
+                  az webapp config hostname add --hostname "HTTPSample.domain" --resource-group "{{ env.RESOURCE_GROUP }}" --slot "staging" --webapp-name {{ env.AZUREWEBAPP_NAME }} 
