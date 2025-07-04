@@ -41,6 +41,10 @@ jobs:
             app-name: ${{ env.AZUREWEBAPP_NAME }}
             slot-name: staging
             package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/loadtestapi
+            
+        - run: |
+            pwd
+            ls -la
 
         - name: Azure Load Testing
           uses: azure/load-testing@v1.1.27
