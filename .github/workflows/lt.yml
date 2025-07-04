@@ -8,6 +8,8 @@ env:
     AZUREWEBAPP_NAME: az2006applt0408
     AZURE_WEBAPP_PACKAGE_PATH: "."
     DOTNET_VERSION: "8.0.x"
+    RESOURCE_GROUP: "az2006-rg"
+    LOAD_TEST_RESOURCE: "az2006loadtest"
 jobs:
     build:
         runs-on: ubuntu-latest
