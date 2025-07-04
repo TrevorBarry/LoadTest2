@@ -71,4 +71,4 @@ jobs:
           uses: azure/CLI@v1
           with:
                inlineScript: |
-                  az webapp config hostname add --hostname "HTTPSample.domain" --resource-group "{{ env.RESOURCE_GROUP }}" --slot "staging" --webapp-name {{ env.AZUREWEBAPP_NAME }} 
+                  az webapp config hostname add --hostname "HTTPSample.domain" --resource-group "${{ env.RESOURCE_GROUP }}" --slot "staging" --webapp-name "${{ env.AZUREWEBAPP_NAME }}"
