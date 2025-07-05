@@ -1,7 +1,7 @@
 name: swap slots if load testing worked
 on: 
    workflow_run:
-      workflows: ['lt']
+      workflows: ['CI on Pull Request']
       types: [completed]
 
 env: 
