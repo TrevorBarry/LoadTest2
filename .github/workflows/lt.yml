@@ -1,0 +1,74 @@
+name: CI on Pull Request
+#on: [push]
+on: 
+    pull_request:
+     branches:
+     - main
+
+env: 
+    AZUREWEBAPP_NAME: az2006applt0408
+    AZURE_WEBAPP_PACKAGE_PATH: "."
+    DOTNET_VERSION: "8.0.x"
+    RESOURCE_GROUP: "az2006-rg"
+    LOAD_TEST_RESOURCE: "az2006loadtest"
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v4
+          with: 
+            ref: staging
+
+        - name: dotnet build and publish
+          run: |
+            dotnet restore fapi/LoadTest2.csproj
+            dotnet build fapi/LoadTest2.csproj --configuration Release
+            dotnet publish fapi/LoadTest2.csproj --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/loadtestapi
+
+        - name: "Login vis CLI"
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+        - name: Setup .NET core
+          uses: actions/setup-dotnet@v2
+          with:
+            dotnet-version: ${{ env.DOTNET_VERSION }}
+
+        - name: Deploy to Azure Web App
+          uses: azure/webapps-deploy@v3
+          with:
+            app-name: ${{ env.AZUREWEBAPP_NAME }}
+            slot-name: staging
+            package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/loadtestapi
+            
+        - run: |
+            pwd
+            ls -la
+
+        - name: Azure Load Testing
+          uses: azure/load-testing@v1.1.27
+          with:
+             loadTestConfigFile: 'fapi/test1.yml'
+             loadTestResource: ${{ env.LOAD_TEST_RESOURCE}}
+             resourceGroup: ${{ env.RESOURCE_GROUP }}
+             env: |
+               [
+                 {
+                    "name": "webapp",
+                    "value": "${{ env.AZUREWEBAPP_NAME }}-staging.azurewebsites.net"
+                 }
+               ]
+
+        # upload the published website code artifacts
+        - name: Upload artifact for deployment job
+          uses: actions/upload-artifact@v4
+          with:
+            name: loadTestResults
+            path: ${{github.workspace}}/loadTest
+         
+        #- name: assign domain name 'HTTPSSample.domain' to staging slot
+        #  uses: azure/CLI@v1
+        #  with:
+        #       inlineScript: |
+        #          az webapp config hostname add --hostname "HTTPSample.domain" --resource-group "${{ env.RESOURCE_GROUP }}" --slot "staging" --webapp-name "${{ env.AZUREWEBAPP_NAME }}"
