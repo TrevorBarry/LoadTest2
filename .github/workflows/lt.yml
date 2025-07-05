@@ -1,10 +1,10 @@
 name: CI on Pull Request
-on: [push]
-# on: [workflow_dispatch]
- # pull_request:
- #   branches:
- #   - staging
-    
+#on: [push]
+on: 
+    pull_request:
+     branches:
+     - main
+
 env: 
     AZUREWEBAPP_NAME: az2006applt0408
     AZURE_WEBAPP_PACKAGE_PATH: "."
