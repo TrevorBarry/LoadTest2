@@ -1,0 +1,12 @@
+displayName: Test
+testPlan: test1.jmx
+description: ''
+engineInstances: 2
+testId: 4c23188e-6525-4690-95b4-5b646f183028
+testType: JMX
+splitAllCSVs: False
+failureCriteria:
+- avg(response_time_ms) > 200
+autoStop:
+  errorPercentage: 80
+  timeWindow: 10
